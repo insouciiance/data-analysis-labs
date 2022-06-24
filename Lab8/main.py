@@ -27,9 +27,9 @@ print(tokenize_column(ukr_news.head(), "Body", "word", abbreviations))
 
 print(lemmatize_column(ukr_news.head(), "Body", "uk", abbreviations))
 
-tfidf_dict = vectorize_top_words(ukr_news["Body"], 10, "uk", stop_words, abbreviations);
+tfidf_dict = vectorize_top_words(ukr_news["Body"], 10, "uk", stop_words, abbreviations)
 
 dump_json(config.TFIDF_DICT_PATH, tfidf_dict, indent=4, ensure_ascii=False)
 
-bag_dict = get_bag_of_words(ukr_news["Body"])
+bag_dict = get_bag_of_words(ukr_news["Body"], "uk", abbreviations)
 dump_json(config.BAG_OF_WORDS_DICT_PATH, bag_dict, indent=4, ensure_ascii=False)

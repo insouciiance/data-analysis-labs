@@ -1,4 +1,5 @@
 import json
+import pandas as pd
 from collections import Counter
 from pandas import DataFrame
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
@@ -87,12 +88,16 @@ def vectorize_top_words(
     return tfidf_dict
 
 
-def get_bag_of_words(column : DataFrame):
+def get_bag_of_words(
+    column : DataFrame,
+    language : str,
+    abbreviations : list):
     """
     Vectorizes a text by bag of words.
     """
-    vectorizer = CountVectorizer()
-    bag_of_words = vectorizer.fit_transform(column).toarray()
+    vectorizer = CountVectorizer(lowercase=False)
+    normalized_columns = [" ".join(TextLemmatizer(language, abbreviations)(text)) for text in column]
+    bag_of_words = vectorizer.fit_transform(normalized_columns).toarray()
     
     bag_dict = {}
 
